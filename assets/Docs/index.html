@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+		<title>文档-Danmaku Runner Script</title>
+		<!-- CSS  -->
+		<link href="materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+		<style type="text/css">
+			html {
+				font-family: 微软雅黑;
+			}
+			.bigfont {
+				font-size: 19px !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper white z-depth-2">
+					<a href="#" class="brand-logo white light-blue-text center">Danmaku Runner Script</a>
+				</div>
+			</nav>
+		</div>
+		<ul class="collapsible" data-collapsible="accordion">
+			<li>
+				<div class="collapsible-header">概述</div>
+				<div class="collapsible-body">
+					<p>Danmaku Runner</p>
+					<p>作者：北海若</p>
+				    <p>本语言基于Javascript, 因此支持所有的Javascript代码，而你也必须符合Javascript代码的标准。</p>
+					<p>下面是一些基本概念：</p>
+					<ul class="collapsible" data-collapsible="accordion">
+						<li>
+							<div class="collapsible-header">1、Tick</div>
+							<div class="collapsible-body"><p>Tick是一个时间单位，1秒=90Tick，类似于帧。</p></div>
+						</li>
+						<li>
+							<div class="collapsible-header">2、关于指令</div>
+							<div class="collapsible-body">
+								<p>格式应该是：指令(参数1, 参数2, ……); （注意:所有符号都是英文符号，且最后一定要有分号）</p>
+								<p>暂时将指令分为控制指令和操作指令。操作指令用来操作子弹等实体。控制指令用来控制什么时候触发一个（或者一些）操作、或者是否进行一个操作。</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">3、关于场景、坐标系</div>
+							<div class="collapsible-body">
+								<p>左下角是坐标原点。</p>
+								<p>坐标系大小是540*540。</p>
+								<p>也就是说，右下角坐标为(540, 0)，右上角坐标为(540, 540)，左上角坐标为(0, 540)</p>
+								<p>任何离开场景的子弹都会被自动消除</p>
+								<p>子弹位置是指子弹左下角的坐标；获取和设置中心点应用CENTER而不是POS</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">4、子弹类型</div>
+							<div class="collapsible-body">
+								<p>注意，类型从0开始计算。当前共3种子弹。</p>
+								<table>
+									<thead>
+										<tr>
+												<th>ID</th>
+												<th>子弹类型</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>0</td>
+											<td>红色圆形子弹</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>绿色圆形子弹</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>蓝色圆形子弹</td>
+										</tr>
+									  <tr>
+										<td>3</td>
+										<td>针弹，类似于梅离绘里的激光</td>
+									  </tr>
+									  <tr>
+										<td>4</td>
+										<td>针弹，类似于Danmaku Death里的激光</td>
+									  </tr>
+									</tbody>
+								</table>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">5、预制AI类型</div>
+							<div class="collapsible-body">
+								<p>注意，类型从0开始计算。当前共3种子弹。</p>
+								<table>
+									<thead>
+										<tr>
+												<th>ID</th>
+												<th>AI类型</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>0</td>
+											<td>不使用预制AI</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>绕着初始点以固定角速度转动，此时参数1为角速度，单位 度/秒</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>绕着某点以固定角速度转动，此时需要三个参数，参数1为角速度，单位 度/秒，参数2和参数3分别为旋转中心的X和Y坐标</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">6、工程</div>
+							<div class="collapsible-body"><p>工程本质上是一个文件夹，包含了一系列的脚本。</p>
+							<p>工程中的脚本由Describer文件联系起来</p>
+							<p>Describer文件语法：</p>
+							<p>Run 脚本文件名<br />执行一个脚本文件，请注意脚本文件的先后顺序。</p>
+							<p>Reg 描述文件名<br />添加一个描述式文件</p>
+							<p>RunP 脚本文件名 开始时间 结束时间<br />在指定时间内执行脚本文件，到达结束时间会重置脚本；时间单位为毫秒；如果多P时间交叉可能会出现意料之外的情况，因此暂时请尽量避免</p>
+							<p>#打头的一行表示注释，将被忽略</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header">指令</div>
+				<div class="collapsible-body">
+					<ul class="collapsible" data-collapsible="accordion">
+					    <li>
+						    <div class="collapsible-header">定义变量</div>
+						    <div class="collapsible-body">
+							  <p>定义一个变量</p>
+							  <p>用法:</p>
+							  <p>var varName;</p>
+							  <p>varName为变量名称</p>
+						    </div>
+					    </li>
+						<li>
+							<div class="collapsible-header">赋值</div>
+							<div class="collapsible-body">
+								<p>给一个变量赋值（进行此操作前必须定义变量）</p>
+								<p>用法：</p>
+								<p>varName = 表达式</p>
+								<p>参数说明：</p>
+								<p>varName：变量名，不能为纯数字</p>
+								<p>表达式：可以是一个数字，也可以是一个式子，如1+1</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">1、NewProj（操作指令）</div>
+							<div class="collapsible-body">
+								<p>生成一颗子弹</p>
+								<p>用法：</p>
+								<p>NewProj(type, px, py, vx, vy, scl);</p>
+								<p>返回值（例如执行var a=NewProj(type, px, py, vx, vy, scl);后，a的值就是指令的返回值）：</p>
+								<p>整数，返回子弹的ID，可在之后控制子弹运动时使用。</p>
+								<p>参数说明：</p>
+								<p>type：子弹的类型，参见子弹类型列表。 类型：整数</p>
+								<p>px：生成子弹中心X坐标 类型：数字</p>
+								<p>py：生成子弹中心Y坐标 类型：数字</p>
+								<p>vx：在X方向的速度 类型：数字 可选 若不输入则默认为0</p>
+								<p>vy：在Y方向的速度 类型：数字 可选 若不输入则默认为0</p>
+								<p>scl：子弹大小 类型：数字 可选 若不输入则默认为0.5</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">2、NewProjRandom（操作指令）</div>
+							<div class="collapsible-body">
+								<p>生成一颗随机位置随机速度的子弹</p>
+								<p>用法：</p>
+								<p>type：子弹的类型，参见子弹类型列表。 类型：整数</p>
+								<p>NewProjRandom(type, scl);</p>
+								<p>参数说明：</p>
+								<p>scl：子弹大小 类型：数字 可选 若不输入则默认为0.5</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">3、setInterval（控制指令，来自Javascript）</div>
+							<div class="collapsible-body">
+								<p>表示接下来的指令会每隔一段时间执行一次。</p>
+								<p>用法：</p>
+								<p>setInterval(function(){<br />&nbsp;&nbsp;&nbsp;&nbsp;要执行的代码……<br />}, time);</p>
+								<p>参数说明：</p>
+								<p>time：时间长度 类型：数字，单位毫秒</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">4、toast（操作指令）</div>
+							<div class="collapsible-body">
+								<p>在屏幕上显示一条信息。</p>
+								<p>用法：</p>
+								<p>toast(info);</p>
+								<p>参数说明：</p>
+								<p>info: 需要显示的信息 类型：字符串（如"123"）</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">5、while（控制指令，来自Javascript）</div>
+							<div class="collapsible-body">
+								<p>表示接下来的指令会循环执行，直到条件不成立。</p>
+								<p>用法：</p>
+								<p>while(条件){<br />&nbsp;&nbsp;&nbsp;&nbsp;要循环执行的代码……<br />}</p>
+								<p>参数说明：</p>
+								<p>条件：如a<2</p>
+								<p>例子：<br />var i=1;<br />while(i<=12){<br />&nbsp;&nbsp;&nbsp;&nbsp;NewProjRandom(0, i/12);<br />&nbsp;&nbsp;&nbsp;&nbsp;i++;<br />}<br />该代码会生成大小依次增大的12颗随机弹。（i++表示将i的值加一）</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">6、GetProj（操作指令）</div>
+							<div class="collapsible-body">
+								<p>获取子弹的一个属性。</p>
+								<p>用法：</p>
+								<p>GetProj(id, property);</p>
+								<p>参数说明：</p>
+								<p>id：子弹id，由NewProj函数返回</p>
+								<p>property的可能值为：POS_X（位置X坐标） POS_Y（位置Y坐标） VEL_X（速度X分量） VEL_Y（速度Y分量）CENTER_X（位置X坐标） CENTER_Y（位置Y坐标） ACCEL_X ACCEL_Y(加速度的X Y分量) VALID子弹是否可用</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">7、SetProj（操作指令）</div>
+							<div class="collapsible-body">
+								<p>设置子弹的属性。</p>
+								<p>用法：</p>
+								<p>SetProj(id, property, value1, value2);</p>
+								<p>参数说明：</p>
+								<p>id：子弹id，由NewProj函数返回</p>
+								<p>property的可能值参见GetProj；另外增加:POS、VEL、CENTER、ACCEL、PARENT</p>
+								<p>value1：设置的值</p>
+								<p>value2：仅POS、VEL、ACCEL、CENTER时需要，此时两个value分别表示X方向和Y方向的值</p>
+								<p>特殊说明：property为VALID时，GetProj如果子弹存在会返回子弹的已存在时间，否则返回一个负值；SetProj若value小于0，子弹会继续绘制和移动，但不会进行与自机碰撞的判定，若value大于0则恢复判定。
+								<br />property为PARENT时，设置子弹位置的参考系，关于参考系请查阅 22NewRelative
+								</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">8、GetSelf（操作指令）</div>
+							<div class="collapsible-body">
+								<p>获取自机的属性。</p>
+								<p>用法：</p>
+								<p>GetSelf(property);</p>
+								<p>参数说明：</p>
+								<p>property的可能值：POS_X POS_Y</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">9、Config</div>
+							<div class="collapsible-body">
+								<p>设置。</p>
+								<p>用法：</p>
+								<p>Config(key, value);</p>
+								<p>参数说明：</p>
+								<p>key可能值：SELF_ACTIVE，此时value为0则会不显示自机。</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">10、AddTexture</div>
+							<div class="collapsible-body">
+								<p>添加自定义材质，返回添加材质的id号以便之后使用，此ID可作为子弹的类型值</p>
+								<p>作子弹时，子弹判定为以材质中心为圆心、半径为材质短边80%的圆。</p>
+								<p>材质的路径相对于 SD卡/DanmakuRunner/ExtraTextures/</p>
+								<p>用法：</p>
+								<p>AddTexture(filename)</p>
+								<p>参数说明：</p>
+								<p>filename，需要加载的文件名，需要带后缀名，如"4.png"。（需要引号，且是英文引号）</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">11、SetSelfTexture</div>
+							<div class="collapsible-body">
+								<p>设置自机材质</p>
+								<p>用法：</p>
+								<p>SetSelfTexture(texture_id);</p>
+								<p>参数说明：</p>
+								<p>texture_id：由AddTexture返回的ID值</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">12、ShootPlayer（操作指令）</div>
+							<div class="collapsible-body">
+								<p>从指定位置发出自机狙</p>
+								<p>用法：</p>
+								<p>ShootPlayer(type, posX, posY, veloc, scale, deltaDeg);</p>
+								<p>参数说明：</p>
+								<p>type：子弹的类型，参见子弹类型列表。</p>
+								<p>posX：子弹中心X坐标</p>
+								<p>posY：子弹中心Y坐标</p>
+								<p>veloc：自机狙速度，默认为1</p>
+								<p>scale：子弹大小，默认0.5</p>
+								<p>deltaDeg：偏移量，可以自己实验，默认0</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">13、NewText和AddText</div>
+							<div class="collapsible-body">
+								<p>在屏幕信息池中添加一条信息。NewText会自动换行。</p>
+								<p>用法：</p>
+								<p>NewText(msg); 或 AddText(msg);</p>
+								<p>参数说明：</p>
+								<p>msg：需要显示的信息</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">14、NewProjAng</div>
+							<div class="collapsible-body">
+								<p>用另一种方式创建子弹，返回创建的子弹ID。</p>
+								<p>用法：</p>
+								<p>NewProjAng(子弹类型, 子弹中心X坐标, 子弹中心Y坐标, 速度角度, 速度大小, 子弹大小);</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">15、SetProjShader</div>
+							<div class="collapsible-body">
+								<p>给子弹加上着色器</p>
+								<p>用法：</p>
+								<p>SetProjShader(子弹ID, 红色分量, 绿色分量, 蓝色分量, 不透明度);</p>
+								<p>红绿蓝和不透明度都是0~1之间的数</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">16、DelProj</div>
+							<div class="collapsible-body">
+								<p>消除子弹</p>
+								<p>用法：</p>
+								<p>DelProj(id);</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">17、SetProjAI</div>
+							<div class="collapsible-body">
+								<p>给子弹设置预制AI</p>
+								<p>用法：</p>
+								<p>SetProjAI(id, type, arg0, ...);</p>
+								<p>参数说明：</p>
+								<p>id：子弹id，由NewProj函数返回</p>
+								<p>type：AI类型，详情查看 预制AI类型</p>
+								<p>arg0, ...：所选择AI的参数，详情查看 预制AI类型</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">18、SetProjLifeTime</div>
+							<div class="collapsible-body">
+								<p>让子弹在一定时间后消失。</p>
+								<p>用法：</p>
+								<p>SetProjLifeTime(id, time);</p>
+								<p>参数说明：</p>
+								<p>id：子弹id，由NewProj函数返回</p>
+								<p>time：时间长度，单位Tick（1Tick = 1/90秒）</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">19、KillPlayer</div>
+							<div class="collapsible-body">
+								<p>杀死玩家，用于制造自定义的判定。（效果是在屏幕上显示的Dead Time里加一次）</p>
+								<p>用法：</p>
+								<p>KillPlayer();</p>
+							</div>
+						</li>
+					  <li>
+						<div class="collapsible-header">20、ClearProjs</div>
+						<div class="collapsible-body">
+						  <p>清除屏幕上所有子弹。</p>
+						  <p>用法：</p>
+						  <p>ClearProjs();</p>
+						</div>
+					  </li>
+					  <li>
+						<div class="collapsible-header">21、NewProjL</div>
+						<div class="collapsible-body">
+						  <p>创建一颗针弹，返回子弹id。不建议屏幕上同时出现多于400个针弹，会导致效率问题</p>
+						  <p>用法：</p>
+						  <p>NewProjL(type, posX, posY, velX, velY, sclL, scl);</p>
+						  <p>参数说明:</p>
+						  <p>type:子弹类型，参考‘子弹类型’，建议使用标出‘针弹’的子弹</p>
+						  <p>posX, posY, velX, velY参考NewProj</p>
+						  <p>sclL针弹长度 scl针弹宽度</p>
+						</div>
+					  </li>
+						<li>
+						<div class="collapsible-header">22、NewRelative</div>
+						<div class="collapsible-body">
+						  <p>创建一个参考系，返回参考系的id</p>
+						  <p>用法：</p>
+						  <p>NewRelative(posX, posY, velX, velY);</p>
+						  <p>参数说明:</p>
+						  <p>posX, posY, velX, velY参考NewProj</p>
+						  <p>参考系本质是一颗特殊的子弹，可以进行与普通子弹相同的操作，如SetProj。</p>
+							<p>返回的id可以用于SetProj的PARENT中</p>
+							<p>示例：</p>
+							<p>Config(FIGHTAREA, 1024);<br />
+									setTimeout(function(){<br />
+									setInterval(function(){<br />
+										 var parent = NewRelative(Math.random()*540, Math.random()*540, Math.random()*4-2, Math.random()*4-2);<br />
+										 for (var i=0; i<24; i++)<br />
+										 {<br />
+												 var id = NewProjAng(0, 0, 0, i * 360 / 24, 1);<br />
+												 SetProj(id, PARENT, parent);<br />
+												 SetProjAI(id, 1, 60);<br />
+										 }<br />
+									}, 768);<br />
+									},500);<br />
+							</p>
+						</div>
+					  </li>
+						<li>
+							<div class="collapsible-header">23、NewProjAngL和ShootPlayerL</div>
+							<div class="collapsible-body">
+								<p>创建针弹的两种方式。</p>
+								<p>用法：
+								NewProjAngL(type, posX, posY, angle, velocity, sclL, scl)<br />
+								ShootPlayerL(type, posX, posY, veloc, sclL, scale, deltaDeg)<br />
+								参数含义查阅NewProjL和NewProjAng及ShootPlayer。</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">24、SetProjEvent(id, type, func)</div>
+							<div class="collapsible-body">
+								<p>给子弹设置事件</p>
+								<p>参数：
+								id：子弹id，由NewProj系列函数返回<br />
+								type：事件类型，目前只能为DIE（子弹死亡，包括出屏幕系统回收、用户DelProj和SetProjLifeTime导致的子弹死亡）<br />
+								func：回调函数名字，需要用双引号括起来</p>
+								<p>例子【分裂弹】：<br />
+									function callback(id)<br />
+									{<br />
+											for (var i=0; i<32; i++)<br />
+											{<br />
+													 var nid = NewProjAng(0, GetProj(id, CENTER_X) < 523 ? GetProj(id, CENTER_X)+16 : 539 , GetProj(id, CENTER_Y) < 523 ? GetProj(id, CENTER_Y) + 16 : 539, i * 360 / 32, 2);<br />
+											}<br />
+									}<br />
+									setInterval(function(){<br />
+									var id = NewProj(0, 270, 270, Math.random()*4-2, Math.random()*4-2, 1);<br />
+									SetProjEvent(id, DIE, "callback");<br />
+									}, 600);<br />
+								</p>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header">25、PlrAng</div>
+							<div class="collapsible-body">
+								<p>获取玩家当前位置的角度</p>
+								<p>用法：
+								PlrAng(posX, posY);<br />
+								posX posY：角度计算的参考点</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header">一些你可能不知道的操作</div>
+				<div class="collapsible-body">
+					<p>选择打开文件的对话框中长按可以有更多操作</p>
+					<p>编辑界面可以按手机菜单键弹出菜单</p>
+				</div>
+			</li>
+			<li>
+				<div class="collapsible-header">小工具：Vector2</div>
+				<div class="collapsible-body">
+					<p>可以用来帮助进行计算，代表一个二维坐标系里的点（向量）。</p>
+					<p>var 名称 = new Vector2(x, y); 创建一个代表(x,y)的向量/点 假定名字为vec</p>
+					<p>vec.add(other); 向量加法，加上一个其他向量</p>
+					<p>vec.sub(other); 向量减法，减去一个其他向量</p>
+					<p>vec.rotate(degrees); 将向量旋转一个角度</p>
+					<p>vec.nor(); 将向量方向不变，长度变为1</p>
+					<p>vec.length(); 返回向量长度</p>
+					<p>vec.x和vec.y，代表向量x分量和y分量、点的x,y坐标值</p>
+					<p>vec.scl(scalar); 将向量的长度变成原来scalar倍</p>
+					<p>vec.set(x,y); 将向量x,y分量赋值为x,y</p>
+					<p>vec.angle(); 获取向量的角度</p>
+					<p>Vector2.add(vec1, vec2); 获取一个新的向量，它的值为vec1和vec2的和</p>
+					<p>Vector2.sub(vec1, vec2); 获取一个新的向量，它的值为vec1和vec2的差</p>
+				</div>
+			</li>
+		</ul>
+		<!-- JavaScript -->
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<script type="text/javascript" src="materialize.min.js"></script>
+		<script type="text/javascript" src="init-index.js"></script>
+	</body>
+</html>

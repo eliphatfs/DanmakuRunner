@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:gravity="center"
+	android:orientation="vertical">
+
+	<Button
+		android:id="@+id/docButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:onClick="OnButtonClick_Doc"
+		android:text="Document"/>
+
+	<Button
+		android:id="@+id/editButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:onClick="OnButtonClick_Edit"
+		android:text="Editor"/>
+
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Settings"
+		android:layout_width="wrap_content"
+		android:onClick="OnButtonClick_Settings"/>
+	
+	<Button
+		android:layout_height="wrap_content"
+		android:text="Explore Online"
+		android:layout_width="wrap_content"
+		android:onClick="OnButtonClick_Net"/>
+
+</LinearLayout>
+

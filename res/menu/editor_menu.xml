@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+	<item
+        android:title="插入函数" android:id="@+id/insertFunction"/>
+    
+    <item android:title="插入代码片段" android:id="@+id/insertCodePara"/>
+    
+</menu>
