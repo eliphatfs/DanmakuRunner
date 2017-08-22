@@ -37,19 +37,123 @@
 		    android:onClick="OnButtonClick_New" />
 
 	</LinearLayout>
-
-	<EditText
-	    android:id="@+id/editText"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:layout_weight="1"
-	    android:ems="10"
-	    android:gravity="top|left"
-	    android:inputType="textMultiLine" >
-
-		<requestFocus/>
-
-	</EditText>
-
+	<ScrollView android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="0dp">
+		<EditText
+		    android:id="@+id/editText"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:ems="10"
+		    android:gravity="top|start"
+		    android:inputType="textMultiLine" >
+	
+			<requestFocus/>
+	
+		</EditText>
+	</ScrollView>
+	
+	<HorizontalScrollView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+		    	android:layout_gravity="bottom" >
+		<LinearLayout
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="bottom"
+		    android:orientation="horizontal" >
+	
+		    <Button
+			    android:id="@+id/buttonInsertTab"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="|→"
+			    android:onClick="OnButtonClick_Inserts" />
+		    
+			<Button
+			    android:id="@+id/buttonInsertPlus"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="+"
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertMinus"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="-"
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertTimes"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="*"
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertDivision"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="/"
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertDoubleQuote"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text='"'
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertSingleQuote"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="'"
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertLeftBracketS"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="("
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertRightBracketS"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text=")"
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertLeftBracketM"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="["
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertRightBracketM"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="]"
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertLeftBracketL"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="{"
+			    android:onClick="OnButtonClick_Inserts" />
+			
+			<Button
+			    android:id="@+id/buttonInsertRightBracketL"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="}"
+			    android:onClick="OnButtonClick_Inserts" />
+		</LinearLayout>
+	</HorizontalScrollView>
 </LinearLayout>
 

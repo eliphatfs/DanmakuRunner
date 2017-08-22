@@ -37,6 +37,28 @@ public class OtherSTL {
 		timer.scheduleTask(tasks.get(tid), 0, (float)(milliseconds / 1000));
 		return tid;
 	}
+	public void setIntervalEx(final V8Function function, double timeout, double milliseconds, double timelast)
+	{
+		final int id = Intervals.size();
+		Intervals.add(function.twin());
+		final int tid = tasks.size();
+		tasks.add(new Task() {
+			@Override
+			public void run() {
+				Runner.scriptThread.functionsQueue.add(Intervals.get(id));
+			}
+		});
+		if (WillClear) {
+			willClearTasks.add(tasks.get(tid));
+		}
+		timer.scheduleTask(tasks.get(tid), (float)(timeout / 1000), (float)(milliseconds / 1000));
+		timer.scheduleTask(new Task() {
+			@Override
+			public void run() {
+				tasks.get(tid).cancel();
+			}
+		}, (float)((timeout + timelast) / 1000));
+	}
 	public void clearInterval(int tid)
 	{
 		tasks.get(tid).cancel();

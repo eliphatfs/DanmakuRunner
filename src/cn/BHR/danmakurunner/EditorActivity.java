@@ -9,6 +9,8 @@ import cn.BHR.danmakurunner.Projecting.ProjectingMain;
 import android.content.*;
 import java.io.*;
 
+import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
+
 public class EditorActivity extends Activity {
 	public static EditorActivity instance;
 	public static EditText editorMain;
@@ -103,6 +105,32 @@ public class EditorActivity extends Activity {
 			}
 		}.show();
 	}
+	
+	public void OnButtonClick_Inserts(View view)
+	{
+		switch (view.getId()) {
+		case R.id.buttonInsertTab:
+			editorMain.getEditableText().insert(_findLineStart(editorMain.getSelectionStart()), "\t");
+			break;
+		default:
+			editorMain.getEditableText().insert(editorMain.getSelectionStart(), ((Button)view).getText());
+			break;
+		}
+	}
+	
+	private int _findLineStart(int position)
+	{
+		String string = editorMain.getText().toString();
+		System.out.println(string);
+		int i;
+		for (i=position; i>0; i--)
+		{
+			if (string.charAt(i - 1) == '\n')
+				return i;
+		}
+		return 0;
+	}
+	
 	@Override
 	public void onPause()
 	{
