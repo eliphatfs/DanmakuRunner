@@ -9,8 +9,6 @@ import cn.BHR.danmakurunner.Projecting.ProjectingMain;
 import android.content.*;
 import java.io.*;
 
-import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
-
 public class EditorActivity extends Activity {
 	public static EditorActivity instance;
 	public static EditText editorMain;

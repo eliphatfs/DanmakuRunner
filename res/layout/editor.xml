@@ -1,159 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:orientation="vertical">
-
+	android:orientation="vertical"
+	android:fillViewport="true">
 	<LinearLayout
-		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
-		android:orientation="horizontal">
-
-		<Button
-			android:id="@+id/button1"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:onClick="OnButtonClick_Save"
-			android:text="Save"/>
-
-		<Button
-			android:layout_height="wrap_content"
-			android:text="Open"
-			android:layout_width="wrap_content"
-			android:onClick="OnButtonClick_Open"/>
-
-		<Button
-			android:layout_height="wrap_content"
-			android:text="Run"
-			android:layout_width="wrap_content"
-			android:onClick="OnButtonClick_Run"/>
-
-		<Button
-		    android:id="@+id/button2"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:text="New" 
-		    android:onClick="OnButtonClick_New" />
-
-	</LinearLayout>
-	<ScrollView android:layout_weight="1"
-				android:layout_width="match_parent"
-				android:layout_height="0dp">
-		<EditText
-		    android:id="@+id/editText"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:ems="10"
-		    android:gravity="top|start"
-		    android:inputType="textMultiLine" >
-	
-			<requestFocus/>
-	
-		</EditText>
-	</ScrollView>
-	
-	<HorizontalScrollView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-		    	android:layout_gravity="bottom" >
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
 		<LinearLayout
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="bottom"
-		    android:orientation="horizontal" >
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:orientation="horizontal">
 	
-		    <Button
-			    android:id="@+id/buttonInsertTab"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="|→"
-			    android:onClick="OnButtonClick_Inserts" />
-		    
 			<Button
-			    android:id="@+id/buttonInsertPlus"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="+"
-			    android:onClick="OnButtonClick_Inserts" />
-			
+				android:id="@+id/button1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:onClick="OnButtonClick_Save"
+				android:text="Save"/>
+	
 			<Button
-			    android:id="@+id/buttonInsertMinus"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="-"
-			    android:onClick="OnButtonClick_Inserts" />
-			
+				android:layout_height="wrap_content"
+				android:text="Open"
+				android:layout_width="wrap_content"
+				android:onClick="OnButtonClick_Open"/>
+	
 			<Button
-			    android:id="@+id/buttonInsertTimes"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="*"
-			    android:onClick="OnButtonClick_Inserts" />
-			
+				android:layout_height="wrap_content"
+				android:text="Run"
+				android:layout_width="wrap_content"
+				android:onClick="OnButtonClick_Run"/>
+	
 			<Button
-			    android:id="@+id/buttonInsertDivision"
+			    android:id="@+id/button2"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
-			    android:text="/"
-			    android:onClick="OnButtonClick_Inserts" />
-			
-			<Button
-			    android:id="@+id/buttonInsertDoubleQuote"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text='"'
-			    android:onClick="OnButtonClick_Inserts" />
-			
-			<Button
-			    android:id="@+id/buttonInsertSingleQuote"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="'"
-			    android:onClick="OnButtonClick_Inserts" />
-			
-			<Button
-			    android:id="@+id/buttonInsertLeftBracketS"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="("
-			    android:onClick="OnButtonClick_Inserts" />
-			
-			<Button
-			    android:id="@+id/buttonInsertRightBracketS"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text=")"
-			    android:onClick="OnButtonClick_Inserts" />
-			
-			<Button
-			    android:id="@+id/buttonInsertLeftBracketM"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="["
-			    android:onClick="OnButtonClick_Inserts" />
-			
-			<Button
-			    android:id="@+id/buttonInsertRightBracketM"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="]"
-			    android:onClick="OnButtonClick_Inserts" />
-			
-			<Button
-			    android:id="@+id/buttonInsertLeftBracketL"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="{"
-			    android:onClick="OnButtonClick_Inserts" />
-			
-			<Button
-			    android:id="@+id/buttonInsertRightBracketL"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:text="}"
-			    android:onClick="OnButtonClick_Inserts" />
+			    android:text="New" 
+			    android:onClick="OnButtonClick_New" />
+	
 		</LinearLayout>
-	</HorizontalScrollView>
-</LinearLayout>
+		<LinearLayout android:layout_weight="1"
+					android:layout_width="match_parent"
+					android:layout_height="0dp">
+			<EditText
+			    android:id="@+id/editText"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:ems="10"
+			    android:gravity="top|start"
+			    android:inputType="textMultiLine" >
+		
+				<requestFocus/>
+		
+			</EditText>
+		</LinearLayout>
+		
+		<HorizontalScrollView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+			    	android:layout_gravity="bottom" >
+			<LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="bottom"
+			    android:orientation="horizontal" >
+		
+			    <Button
+				    android:id="@+id/buttonInsertTab"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="|→"
+				    android:onClick="OnButtonClick_Inserts" />
+			    
+				<Button
+				    android:id="@+id/buttonInsertPlus"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="+"
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertMinus"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="-"
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertTimes"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="*"
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertDivision"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="/"
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertDoubleQuote"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text='"'
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertSingleQuote"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="'"
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertLeftBracketS"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="("
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertRightBracketS"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text=")"
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertLeftBracketM"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="["
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertRightBracketM"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="]"
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertLeftBracketL"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="{"
+				    android:onClick="OnButtonClick_Inserts" />
+				
+				<Button
+				    android:id="@+id/buttonInsertRightBracketL"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="}"
+				    android:onClick="OnButtonClick_Inserts" />
+			</LinearLayout>
+		</HorizontalScrollView>
+	</LinearLayout>
+</ScrollView>
 

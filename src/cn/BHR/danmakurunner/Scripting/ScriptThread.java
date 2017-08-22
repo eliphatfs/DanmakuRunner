@@ -63,7 +63,7 @@ public class ScriptThread {
 				} catch (Exception e) {
 				}
 			}
-		}, 0, 1000/135);
+		}, 0, 8);
 		RunnerActivity.loadSTL();
 	}
 	public static final int NEWPROJ = 1;
