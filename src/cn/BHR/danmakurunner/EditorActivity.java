@@ -27,7 +27,7 @@ public class EditorActivity extends Activity {
 		updateCodeHandler = new UpdateCodeHandler();
 		updateTitleHandler = new UpdateTitleHandler();
 		setContentView(R.layout.editor);
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		((WebView)(findViewById(R.id.editText))).setWebViewClient(new WebViewClient(){
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -85,8 +85,8 @@ public class EditorActivity extends Activity {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			Toast.makeText(this, ProjectingMain.fileName + " 已经自动保存", Toast.LENGTH_LONG).show();
 		}
-		Toast.makeText(this, ProjectingMain.fileName + " 已经自动保存", Toast.LENGTH_LONG).show();
 	}
 	public void OnButtonClick_New(View view)
 	{

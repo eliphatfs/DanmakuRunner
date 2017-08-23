@@ -77,7 +77,7 @@ public class DRSEditText {
 				EditorActivity.updateCodeHandler.post(new Runnable() {
 					@Override
 					public void run() {
-						DWebView.loadUrl("javascript:setContent('"+string.replace("\n", "\\n")+"')");
+						DWebView.loadUrl("javascript:setContent('"+string.replace("\n", "\\n").replace("'", "\\'")+"')");
 					}
 				});
 				WaitReady();
@@ -94,7 +94,7 @@ public class DRSEditText {
 				EditorActivity.updateCodeHandler.post(new Runnable() {
 					@Override
 					public void run() {
-						DWebView.loadUrl("javascript:appendContent('"+string.replace("\n", "\\n")+"')");
+						DWebView.loadUrl("javascript:appendContent('"+string.replace("\n", "\\n").replace("'", "\\'")+"')");
 					}
 				});
 				WaitReady();
@@ -135,7 +135,7 @@ public class DRSEditText {
 						@Override
 						public void run() {
 							String string = cs.toString();
-							Parent.DWebView.loadUrl("javascript:insertContent("+pos+",'"+string.replace("\n", "\\n")+"')");
+							Parent.DWebView.loadUrl("javascript:insertContent("+pos+",'"+string.replace("\n", "\\n").replace("'", "\\'")+"')");
 						}
 					});
 					Parent.WaitReady();
