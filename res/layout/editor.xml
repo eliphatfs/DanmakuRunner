@@ -44,17 +44,16 @@
 		<LinearLayout android:layout_weight="1"
 					android:layout_width="match_parent"
 					android:layout_height="0dp">
-			<EditText
+			<cn.BHR.danmakurunner.UI.WebViewInputRedirected
 			    android:id="@+id/editText"
 			    android:layout_width="match_parent"
 			    android:layout_height="match_parent"
 			    android:ems="10"
-			    android:gravity="top|start"
 			    android:inputType="textMultiLine" >
 		
 				<requestFocus/>
 		
-			</EditText>
+			</cn.BHR.danmakurunner.UI.WebViewInputRedirected>
 		</LinearLayout>
 		
 		<HorizontalScrollView
@@ -72,6 +71,13 @@
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content"
 				    android:text="|→"
+				    android:onClick="OnButtonClick_Inserts" />
+			    
+			    <Button
+				    android:id="@+id/buttonInsertSemiColon"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text=";"
 				    android:onClick="OnButtonClick_Inserts" />
 			    
 				<Button

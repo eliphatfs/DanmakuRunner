@@ -12,6 +12,7 @@ import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import cn.BHR.danmakurunner.*;
 import cn.BHR.danmakurunner.Projecting.ProjectingMain;
+import cn.BHR.danmakurunner.UI.DRSEditText;
 
 public class InputOpenPathDialog extends DialogFragment {
 	public static ListView listView;
@@ -67,7 +68,7 @@ public class InputOpenPathDialog extends DialogFragment {
 				if (EditorActivity.projecting) {
 					id--;
 				}
-				EditText editText = EditorActivity.editorMain;
+				DRSEditText editText = EditorActivity.editorMain;
 				File pFile = new File(EditorActivity.projectPath + items.get((int)id));
 				if (pFile.isFile()) {
 					try {
@@ -75,11 +76,12 @@ public class InputOpenPathDialog extends DialogFragment {
 						InputStreamReader treader = new InputStreamReader(stream, "utf-8");
 						BufferedReader reader = new BufferedReader(treader);
 						String line = null;
-						editText.setText("");
+						StringBuilder builder = new StringBuilder();
 						while ((line = reader.readLine()) != null) {
-							editText.append(line);
-							editText.append("\n");
+							builder.append(line);
+							builder.append("\n");
 						}
+						editText.setText(builder.toString());
 						if (EditorActivity.projecting) {
 							ProjectingMain.fileName = pFile.getName();
 							Message message = new Message();

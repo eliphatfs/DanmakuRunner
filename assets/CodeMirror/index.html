@@ -1,0 +1,84 @@
+<html>
+<head>
+	<script src="lib/codemirror.js"></script>
+	<link rel="stylesheet" href="lib/codemirror.css">
+	<link rel="stylesheet" href="theme/panda-syntax.css">
+	<script src="addon/edit/matchbrackets.js"></script>
+	<script src="addon/comment/comment.js"></script>
+	<script src="addon/comment/continuecomment.js"></script>
+	<script src="mode/javascript/javascript.js"></script>
+	<script>
+	</script>
+</head>
+<body style="background: #000000;">
+	<script>
+		var cm = CodeMirror(document.body, {
+			lineNumbers: true,
+			matchBrackets: true,
+			continueComments: "Enter",
+			mode: "javascript",
+			theme: "panda-syntax",
+			inputStyle: "contenteditable"
+		});
+		cm.on("change", function(){
+			sendContent();
+		});
+		cm.on("cursorActivity", function(){
+			sendCursorPos();
+		});
+		function sendCursorPos()
+		{
+			var linech = cm.doc.getCursor();
+			DRSI.sendCursorPos(new Number((linech.line * 16384 + linech.ch) + "").toString());
+			DRSI.notifyReady();
+		}
+		function sendContent()
+		{
+			DRSI.sendContent(cm.doc.getValue());
+			DRSI.notifyReady();
+		}
+		function setCursorPos(pos)
+		{
+			cm.doc.setCursor({
+				line:parseInt(pos/16384),
+				ch:parseInt(pos%16384)
+			});
+			DRSI.notifyReady();
+		}
+		function setContent(content)
+		{
+			cm.doc.setValue(content);
+			DRSI.notifyReady();
+		}
+		function appendContent(content)
+		{
+			cm.doc.setValue(cm.doc.getValue() + content);
+			DRSI.notifyReady();
+		}
+		function backspace()
+		{
+			if (cm.doc.getSelection().length == 0)
+				cm.execCommand("delCharBefore");
+			else cm.doc.replaceSelection("");
+		}
+		setInterval(function(){
+			var count = parseInt(DRSI.getNeedDeleteCount());
+			for (var i = 0; i < count; i++)
+				backspace();
+		}, 50);
+		function insertContent(index, content)
+		{
+			var old = cm.doc.getValue();
+			var linech = cm.doc.getCursor();
+			var pos = {
+				line:parseInt(index/16384),
+				ch:parseInt(index%16384)
+			};
+			cm.doc.replaceRange(content, pos);
+			cm.doc.setCursor(linech);
+			DRSI.notifyReady();
+		}
+		DRSI.notifyReady();
+	</script>
+</body>
+</html>

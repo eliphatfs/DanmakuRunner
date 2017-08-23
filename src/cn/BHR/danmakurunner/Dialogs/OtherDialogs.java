@@ -4,8 +4,8 @@ import java.io.*;
 
 import android.app.*;
 import android.content.*;
-import android.widget.EditText;
 import cn.BHR.danmakurunner.*;
+import cn.BHR.danmakurunner.UI.DRSEditText;
 
 public class OtherDialogs {
 	public static void ChooseCodeParaDialog() {
@@ -17,14 +17,15 @@ public class OtherDialogs {
 	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
 	            // which 下标从0开始
-				EditText editText = EditorActivity.editorMain;
+				final DRSEditText editText = EditorActivity.editorMain;
 				try {
 					InputStream stream = EditorActivity.instance.getAssets().open("CodePara/"+which+".js");
 					InputStreamReader treader = new InputStreamReader(stream, "utf-8");
 					BufferedReader reader = new BufferedReader(treader);
 					String line = null;
 					while ((line = reader.readLine()) != null) {
-						editText.getEditableText().insert(editText.getSelectionStart(), line);
+						final String fline = line;
+						editText.getEditableText().insert(editText.getSelectionStart(), fline);
 						editText.getEditableText().insert(editText.getSelectionStart(), "\n");
 					}
 					stream.close();
@@ -44,7 +45,7 @@ public class OtherDialogs {
 	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
 	            // which 下标从0开始
-	        	EditText editText = EditorActivity.editorMain;
+	        	DRSEditText editText = EditorActivity.editorMain;
 				try {
 					InputStream stream = EditorActivity.instance.getAssets().open("CodeFunc/"+which+".js");
 					InputStreamReader treader = new InputStreamReader(stream, "utf-8");

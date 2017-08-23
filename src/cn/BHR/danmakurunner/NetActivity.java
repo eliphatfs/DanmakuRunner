@@ -25,8 +25,8 @@ public class NetActivity extends Activity {
 		webView = new WebView(this);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setAllowFileAccess(true);
-		webView.getSettings().setAllowFileAccessFromFileURLs(true);
-		webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+		//webView.getSettings().setAllowFileAccessFromFileURLs(true);
+		//webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
 		webView.getSettings().setDatabaseEnabled(true);
         String dir = getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
         webView.getSettings().setDatabasePath(dir);

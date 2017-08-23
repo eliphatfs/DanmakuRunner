@@ -3,15 +3,18 @@ package cn.BHR.danmakurunner;
 import android.app.*;
 import android.os.*;
 import android.view.*;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.*;
 import cn.BHR.danmakurunner.Dialogs.*;
 import cn.BHR.danmakurunner.Projecting.ProjectingMain;
+import cn.BHR.danmakurunner.UI.DRSEditText;
 import android.content.*;
 import java.io.*;
 
 public class EditorActivity extends Activity {
 	public static EditorActivity instance;
-	public static EditText editorMain;
+	public static DRSEditText editorMain;
 	public static String codeInside="";
 	public static boolean projecting = false;
 	public static String projectPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/DanmakuRunner/";
@@ -25,9 +28,15 @@ public class EditorActivity extends Activity {
 		updateTitleHandler = new UpdateTitleHandler();
 		setContentView(R.layout.editor);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-		editorMain = (EditText)(findViewById(R.id.editText));
-		editorMain.setHorizontallyScrolling(true);
-		//Toast.makeText(this, Environment.getDataDirectory().getAbsolutePath().toString(), Toast.LENGTH_SHORT).show();
+		((WebView)(findViewById(R.id.editText))).setWebViewClient(new WebViewClient(){
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				view.loadUrl(url);
+				return true;
+			}
+		});
+		editorMain = new DRSEditText((WebView)(findViewById(R.id.editText)));
+		editorMain.DWebView.setBackgroundColor(0);
 	}
 	public void OnButtonClick_Save(View view)
 	{
@@ -54,35 +63,30 @@ public class EditorActivity extends Activity {
 	{
 		InputOpenPathDialog dialog = new InputOpenPathDialog();
 		dialog.show(getFragmentManager(), "openFile");
-		if (projecting && (!ProjectingMain.fileName.isEmpty())) {
-			FileOutputStream stream;
-			try {
-				stream = new FileOutputStream(projectPath + ProjectingMain.fileName);
-				stream.write(editorMain.getText().toString().getBytes());
-				stream.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			Toast.makeText(this, ProjectingMain.fileName + " 已经自动保存", Toast.LENGTH_LONG).show();
-		}
+		_autoSave();
 	}
 	public void OnButtonClick_Run(View view)
 	{
 		codeInside = editorMain.getText().toString();
+		_autoSave();
+		Intent runner = new Intent(this, RunnerActivity.class);
+		startActivity(runner);
+		//RunnerActivity.start();
+	}
+	
+	private void _autoSave()
+	{
 		if (projecting && (!ProjectingMain.fileName.isEmpty())) {
 			FileOutputStream stream;
 			try {
 				stream = new FileOutputStream(projectPath + ProjectingMain.fileName);
-				stream.write(editorMain.getText().toString().getBytes());
+				stream.write(editorMain.getText().getBytes());
 				stream.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			Toast.makeText(this, ProjectingMain.fileName + " 已经自动保存", Toast.LENGTH_LONG).show();
 		}
-		Intent runner = new Intent(this, RunnerActivity.class);
-		startActivity(runner);
-		//RunnerActivity.start();
+		Toast.makeText(this, ProjectingMain.fileName + " 已经自动保存", Toast.LENGTH_LONG).show();
 	}
 	public void OnButtonClick_New(View view)
 	{
@@ -106,27 +110,15 @@ public class EditorActivity extends Activity {
 	
 	public void OnButtonClick_Inserts(View view)
 	{
-		switch (view.getId()) {
+		final View fView = view;
+		switch (fView.getId()) {
 		case R.id.buttonInsertTab:
-			editorMain.getEditableText().insert(_findLineStart(editorMain.getSelectionStart()), "\t");
+			editorMain.getEditableText().insert(editorMain.getSelectionStart(), "  ");
 			break;
 		default:
-			editorMain.getEditableText().insert(editorMain.getSelectionStart(), ((Button)view).getText());
+			editorMain.getEditableText().insert(editorMain.getSelectionStart(), ((Button)fView).getText());
 			break;
 		}
-	}
-	
-	private int _findLineStart(int position)
-	{
-		String string = editorMain.getText().toString();
-		System.out.println(string);
-		int i;
-		for (i=position; i>0; i--)
-		{
-			if (string.charAt(i - 1) == '\n')
-				return i;
-		}
-		return 0;
 	}
 	
 	@Override
@@ -166,7 +158,7 @@ public class EditorActivity extends Activity {
 				builder.append('\n');
 			}
 			codeInside = builder.toString();
-			editorMain = (EditText)(findViewById(R.id.editText));
+			editorMain = new DRSEditText((WebView)(findViewById(R.id.editText)));
 			editorMain.setText(codeInside);
 			stream.close();
 			
