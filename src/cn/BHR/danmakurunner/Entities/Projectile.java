@@ -85,10 +85,11 @@ public class Projectile extends Entity
 		}
 		else
 		{
+			rotation = velocity.angle() - 90;
 			setCenter(oldCenter.add(velocity));
 			hitBox();
 			if (parent == -1) {
-				hitRect.set(position.x, position.y, 2*_hitCir.radius, 2*_hitCir.radius);
+				hitRect.set(position.x - _hitCir.radius, position.y - _hitCir.radius, 3*_hitCir.radius, 3*_hitCir.radius);
 			}
 			else hitRect.set(Runner.proj[parent].position.x + position.x, Runner.proj[parent].position.y + position.y, 2*_hitCir.radius, 2*_hitCir.radius);
 			if ((!hitRect.overlaps(Runner.FIGHTAREA)) && (childs == 0))

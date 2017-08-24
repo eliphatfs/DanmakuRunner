@@ -2,6 +2,7 @@ package cn.BHR.danmakurunner.Entities;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.*;
 import cn.BHR.danmakurunner.*;
 
@@ -14,6 +15,7 @@ public class Player extends Entity
 	public int spell = 0;
 	public int invincible = 0;
 	public int invincibleBlinkOpacity = 0;
+	PlayerAnimation animation;
 	@Override
 	public void Init(int _type)
 	{
@@ -25,10 +27,11 @@ public class Player extends Entity
 		existTime = 0;
 		invincible = 90;
 		invincibleBlinkOpacity = 0;
-		scale = 1;
+		scale = 0.6f;
 		rotation = 0;
 		type = _type;
-		texture = new Texture(Gdx.files.internal("judgePoint.png"));
+		animation = new PlayerAnimation();
+		texture = animation.GetCurrentTexture();
 		setCenter(new Vector2(270, 80));
 		// TODO: Implement this method
 	}
@@ -69,14 +72,18 @@ public class Player extends Entity
 	{
 		if (!active) return;
 		if (texture == null)
-			texture = new Texture(Gdx.files.internal("judgePoint.png"));
+			texture = animation.GetCurrentTexture();
 		//float scale = RunnerActivity.configs.get(RunnerActivity.CONFIG_SENSIBILITY, 100) / 100f;
 		
 		if (type > -1) {
 			texture = Runner.projTextures.get(type);
 		}
+		else {
+			animation.Update();
+			texture = animation.GetCurrentTexture();
+		}
 		batch.setColor(1, 1, 1, invincibleBlinkOpacity / 255f);
-		DrawHelper.DrawInFightArea(batch,texture, position, scale, rotation);
+		DrawHelper.DrawInFightArea(batch, texture, position, scale, rotation);
 		batch.setColor(new Color(1, 1, 1, 1));
 		//DrawHelper.DrawInFightArea(batch, Textures.button_start, getCenter(), scale, rotation);
 		// TODO: Implement this method
@@ -89,5 +96,38 @@ public class Player extends Entity
 		Runner.DeathTimes.add(Runner.absTicks);
 		Runner.deathReadCross.Init(0);
 		// TODO: Implement this method
+	}
+	
+	public static class PlayerAnimation
+	{
+		Texture[] textures = new Texture[8];
+		int stat = 0;
+		PlayerAnimation()
+		{
+			for (int i=0; i<textures.length; i++)
+			{
+				Pixmap pixmap = new Pixmap(64, 64, Format.RGBA8888);
+				pixmap.setColor(0, 0, 1, 1);
+				pixmap.fillCircle(32, 32, 10);
+				pixmap.setColor(1, 1, 1, 1);
+				pixmap.fillCircle(32, 32, 5);
+				pixmap.setColor(1, 1, 1, 0.5f);
+				pixmap.drawCircle(32, 32, (int)(i * 3f) + 7);
+				pixmap.setColor(1, 1, 1, 1f);
+				pixmap.drawCircle(32, 32, (int)(i * 3f) + 8);
+				pixmap.setColor(1, 1, 1, 0.5f);
+				pixmap.drawCircle(32, 32, (int)(i * 3f) + 9);
+				textures[i] = new Texture(pixmap);
+				pixmap.dispose();
+			}
+		}
+		Texture GetCurrentTexture()
+		{
+			return textures[stat % textures.length];
+		}
+		void Update()
+		{
+			stat++;
+		}
 	}
 }

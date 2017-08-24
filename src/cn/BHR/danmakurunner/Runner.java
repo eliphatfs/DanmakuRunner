@@ -19,7 +19,7 @@ public class Runner implements ApplicationListener
 {
 	static SpriteBatch batch;
 	public static int absTicks = 0;
-	public static final int MAXPROJTYPE = 5;
+	public static final int MAXPROJTYPE = 227;
 	public static final int MAXPROJ = 1792;
 	public static ArrayList<Texture> projTextures = new ArrayList<Texture>();
 	public static Rectangle FIGHTAREA = new Rectangle(0, 0, 540, 540);
@@ -135,13 +135,13 @@ public class Runner implements ApplicationListener
 	    	if (!touching)
 				oldtouchPos.set(touchPos);
 	    	touching = true;
-			plrNewPos.set(plr.position).add(plr.texture.getWidth() / 2, plr.texture.getHeight() / 2);
+			plrNewPos.set(plr.position).add(plr.width() / 2, plr.height() / 2);
 			plrNewPos.add(Gdx.input.getDeltaX(0) * SettingsActivity.Sensibility / 30, -Gdx.input.getDeltaY(0) * SettingsActivity.Sensibility / 30);
 			if (plrNewPos.x <= 0) plrNewPos.x = 1;
 			else if (plrNewPos.x >= 540) plrNewPos.x = 539;
 			if (plrNewPos.y <= 0) plrNewPos.y = 1;
 			else if (plrNewPos.y >= 540) plrNewPos.y = 539;
-			plr.position.set(plrNewPos.sub(plr.texture.getWidth() / 2, plr.texture.getHeight() / 2));
+			plr.position.set(plrNewPos.sub(plr.width() / 2, plr.height() / 2));
 	    }
 	    else touching = false;
 		batch.begin();

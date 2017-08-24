@@ -56,36 +56,21 @@
 						<li>
 							<div class="collapsible-header">4、子弹类型</div>
 							<div class="collapsible-body">
-								<p>注意，类型从0开始计算。当前共3种子弹。</p>
 								<table>
 									<thead>
 										<tr>
 												<th>ID</th>
-												<th>子弹类型</th>
+												<th>子弹式样</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td>0</td>
-											<td>红色圆形子弹</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>绿色圆形子弹</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>蓝色圆形子弹</td>
-										</tr>
-									  <tr>
-										<td>3</td>
-										<td>针弹，类似于梅离绘里的激光</td>
-									  </tr>
-									  <tr>
-										<td>4</td>
-										<td>针弹，类似于Danmaku Death里的激光</td>
-									  </tr>
+									<tbody id="projIDTable">
 									</tbody>
+									<script>
+										var gen = "";
+										for (var i=0; i< 227; i++)
+											gen += "<tr><td>" + i + "</td><td><img src='../proj" + i + ".png'/></td></tr>";
+										document.getElementById("projIDTable").innerHTML = gen;
+									</script>
 								</table>
 							</div>
 						</li>
