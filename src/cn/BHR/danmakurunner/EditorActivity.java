@@ -37,7 +37,7 @@ public class EditorActivity extends Activity {
 		editorMain.DWebView.setOnKeyListener(new OnKeyListener() {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (keyCode == KeyEvent.KEYCODE_DEL) {
+				if (keyCode == KeyEvent.KEYCODE_DEL && !WebViewInputRedirected.IsNewInput) {
 					return true;
 				}
 				return false;

@@ -1,6 +1,7 @@
 package cn.BHR.danmakurunner.UI;
 
 import android.content.Context;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
@@ -10,6 +11,7 @@ import android.webkit.WebView;
 import cn.BHR.danmakurunner.EditorActivity;
 
 public class WebViewInputRedirected extends WebView {
+	public static boolean IsNewInput = false;
 	public WebViewInputRedirected(Context context) {
 		super(context);
 	}
@@ -33,12 +35,21 @@ public class WebViewInputRedirected extends WebView {
 	
 	@Override
 	public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-		return new RedirectedInputConnection(super.onCreateInputConnection(outAttrs), true);
+		InputConnection inputConnection = new RedirectedInputConnection(super.onCreateInputConnection(outAttrs), true);
+		try {
+			inputConnection.getHandler();
+			return inputConnection;
+		} catch (Exception e) {
+			IsNewInput = true;
+			return super.onCreateInputConnection(outAttrs);
+		}
 	}
 	
 	static class RedirectedInputConnection extends InputConnectionWrapper {
+		Handler handler;
         public RedirectedInputConnection(InputConnection target, boolean mutable) {
             super(target, mutable);
+            handler = new Handler();
         }
 
         @Override
