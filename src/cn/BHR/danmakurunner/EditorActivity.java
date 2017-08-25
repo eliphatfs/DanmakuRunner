@@ -4,12 +4,11 @@ import android.app.*;
 import android.os.*;
 import android.view.*;
 import android.view.View.OnKeyListener;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.*;
 import cn.BHR.danmakurunner.Dialogs.*;
 import cn.BHR.danmakurunner.Projecting.ProjectingMain;
 import cn.BHR.danmakurunner.UI.DRSEditText;
+import cn.BHR.danmakurunner.UI.WebViewInputRedirected;
 import android.content.*;
 import java.io.*;
 
@@ -21,6 +20,7 @@ public class EditorActivity extends Activity {
 	public static String projectPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/DanmakuRunner/";
 	public static UpdateCodeHandler updateCodeHandler;
 	public static UpdateTitleHandler updateTitleHandler;
+	WebViewInputRedirected dynamicWebView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,8 +29,9 @@ public class EditorActivity extends Activity {
 		updateTitleHandler = new UpdateTitleHandler();
 		setContentView(R.layout.editor);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-		
-		editorMain = new DRSEditText((WebView)(findViewById(R.id.editText)));
+		WebViewInputRedirected dynamicWebView = new WebViewInputRedirected(this);
+		((LinearLayout)(findViewById(R.id.editTextContainer))).addView(dynamicWebView);
+		editorMain = new DRSEditText(dynamicWebView);
 		editorMain.DWebView.setBackgroundColor(0);
 		editorMain.DWebView.setOnKeyListener(new OnKeyListener() {
 			@Override
@@ -161,7 +162,7 @@ public class EditorActivity extends Activity {
 				builder.append('\n');
 			}
 			codeInside = builder.toString();
-			editorMain = new DRSEditText((WebView)(findViewById(R.id.editText)));
+			editorMain = new DRSEditText(dynamicWebView);
 			editorMain.setText(codeInside);
 			stream.close();
 			

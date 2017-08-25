@@ -42,17 +42,9 @@
 		</LinearLayout>
 		<LinearLayout android:layout_weight="1"
 					android:layout_width="match_parent"
-					android:layout_height="0dp">
-			<cn.BHR.danmakurunner.UI.WebViewInputRedirected
-			    android:id="@+id/editText"
-			    android:layout_width="match_parent"
-			    android:layout_height="match_parent"
-			    android:ems="10"
-			    android:inputType="textMultiLine" >
-		
-				<requestFocus/>
-		
-			</cn.BHR.danmakurunner.UI.WebViewInputRedirected>
+					android:layout_height="0dp"
+					android:id="@+id/editTextContainer"
+					android:orientation="vertical">
 		</LinearLayout>
 		
 		<HorizontalScrollView
