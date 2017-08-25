@@ -13,6 +13,9 @@ public class DRSEditText {
 	public WebView DWebView;
 	public static Timer Worker = new Timer();
 	public DRSEditText(WebView context) {
+		if (Worker == null) {
+			Worker = new Timer();
+		}
 		DWebView = context;
 		Init();
 	}
