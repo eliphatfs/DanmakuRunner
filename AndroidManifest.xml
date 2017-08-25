@@ -4,6 +4,7 @@
     android:versionCode="37"
     android:versionName="6.1.2" >
     
+    <uses-permission android:name="android.permission.BLUETOOTH" /> 
 	<uses-permission android:name="android.permission.INTERNET" /> 
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> 
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> 
@@ -12,7 +13,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
-    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="24" />
+    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="24" />
 
     <application
         android:icon="@drawable/ic_launcher"

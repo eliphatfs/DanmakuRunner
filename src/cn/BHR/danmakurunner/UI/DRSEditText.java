@@ -30,14 +30,14 @@ public class DRSEditText {
 				DRSI = new DRSEditInterface();
 				Eops = new EditOps(DRSEditText.this);
 				DRSI.ready = false;
-				EditorActivity.updateCodeHandler.post(new Runnable() {
+				EditorActivity.updateCodeHandler.postDelayed(new Runnable() {
 					@Override
 					public void run() {
 						DWebView.getSettings().setJavaScriptEnabled(true);
 						DWebView.addJavascriptInterface(DRSI, "DRSI");
 						DWebView.loadUrl("file:///android_asset/CodeMirror/index.html");
 					}
-				});
+				}, 1);
 				WaitReady();
 			}
 		}, 0);

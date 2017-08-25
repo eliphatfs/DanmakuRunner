@@ -1,6 +1,7 @@
 package cn.BHR.danmakurunner;
 
 import android.app.*;
+import android.app.ActionBar.LayoutParams;
 import android.os.*;
 import android.view.*;
 import android.view.View.OnKeyListener;
@@ -29,8 +30,8 @@ public class EditorActivity extends Activity {
 		updateTitleHandler = new UpdateTitleHandler();
 		setContentView(R.layout.editor);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-		WebViewInputRedirected dynamicWebView = new WebViewInputRedirected(this);
-		((LinearLayout)(findViewById(R.id.editTextContainer))).addView(dynamicWebView);
+		dynamicWebView = new WebViewInputRedirected(this);
+		((LinearLayout)(findViewById(R.id.editTextContainer))).addView(dynamicWebView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		editorMain = new DRSEditText(dynamicWebView);
 		editorMain.DWebView.setBackgroundColor(0);
 		editorMain.DWebView.setOnKeyListener(new OnKeyListener() {
