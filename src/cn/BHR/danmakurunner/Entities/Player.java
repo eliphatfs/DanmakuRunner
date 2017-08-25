@@ -3,7 +3,6 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.*;
 import cn.BHR.danmakurunner.*;
 
 public class Player extends Entity

@@ -75,7 +75,11 @@
 				ch:parseInt(index%16384)
 			};
 			cm.doc.replaceRange(content, pos);
-			cm.doc.setCursor(linech);
+			pos = {
+				line:parseInt(index/16384),
+				ch:parseInt(index%16384)+content.length
+			};
+			cm.doc.setCursor(pos);
 			DRSI.notifyReady();
 		}
 		DRSI.notifyReady();

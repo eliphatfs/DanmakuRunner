@@ -3,6 +3,7 @@ package cn.BHR.danmakurunner;
 import android.app.*;
 import android.os.*;
 import android.view.*;
+import android.view.View.OnKeyListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.*;
@@ -28,15 +29,18 @@ public class EditorActivity extends Activity {
 		updateTitleHandler = new UpdateTitleHandler();
 		setContentView(R.layout.editor);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-		((WebView)(findViewById(R.id.editText))).setWebViewClient(new WebViewClient(){
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				return true;
-			}
-		});
+		
 		editorMain = new DRSEditText((WebView)(findViewById(R.id.editText)));
 		editorMain.DWebView.setBackgroundColor(0);
+		editorMain.DWebView.setOnKeyListener(new OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_DEL) {
+					return true;
+				}
+				return false;
+			}
+		});
 	}
 	public void OnButtonClick_Save(View view)
 	{
@@ -73,7 +77,6 @@ public class EditorActivity extends Activity {
 		startActivity(runner);
 		//RunnerActivity.start();
 	}
-	
 	private void _autoSave()
 	{
 		if (projecting && (!ProjectingMain.fileName.isEmpty())) {

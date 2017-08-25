@@ -26,6 +26,11 @@ public class WebViewInputRedirected extends WebView {
 		super(context, attrs, defStyleAttr, defStyleRes);
 	}
 	
+	@SuppressWarnings("deprecation")
+	public WebViewInputRedirected(Context context, AttributeSet attrs, int defStyleAttr, boolean privateBrowsing) {
+		super(context, attrs, defStyleAttr, privateBrowsing);
+	}
+	
 	@Override
 	public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
 		return new RedirectedInputConnection(super.onCreateInputConnection(outAttrs), true);
@@ -44,6 +49,5 @@ public class WebViewInputRedirected extends WebView {
             }
             return super.sendKeyEvent(event);
         }
-
     }
 }
