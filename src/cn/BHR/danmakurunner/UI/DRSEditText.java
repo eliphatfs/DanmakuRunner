@@ -120,13 +120,6 @@ public class DRSEditText {
 	}
 	public void WaitReady()
 	{
-		EditorActivity.updateCodeHandler.post(new Runnable() {
-			@Override
-			public void run() {
-				InputMethodManager imm = (InputMethodManager) EditorActivity.instance.getSystemService(EditorActivity.INPUT_METHOD_SERVICE);
-				imm.toggleSoftInput(0, InputMethodManager.RESULT_SHOWN);
-			}
-		});
 		while(!DRSI.ready);
 	}
 	public static class EditOps

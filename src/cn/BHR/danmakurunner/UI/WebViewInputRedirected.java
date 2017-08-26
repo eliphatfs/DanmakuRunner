@@ -6,12 +6,13 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputConnectionWrapper;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.EditText;
 import cn.BHR.danmakurunner.EditorActivity;
 
 public class WebViewInputRedirected extends WebView {
-	public EditText innerEditText;
+	public static boolean IsNewInput;
 	public WebViewInputRedirected(Context context) {
 		super(context);
 		Init(context);
@@ -40,28 +41,28 @@ public class WebViewInputRedirected extends WebView {
 	
 	private void Init(Context context)
 	{
-		innerEditText = new EditText(context);
 	}
 	
 	@Override
 	public boolean onCheckIsTextEditor() {
 		return true;
 	}
-	
+		
 	@Override
 	public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-		InputConnection inputConnection = new RedirectedInputConnection(innerEditText.onCreateInputConnection(outAttrs), true);
-		return inputConnection;
-		/*try {
+		InputConnection inputConnection = new RedirectedInputConnection(super.onCreateInputConnection(outAttrs), true);
+
+		try {
 			inputConnection.getTextBeforeCursor(1, 0);
 			return inputConnection;
 		} catch (Exception e) {
 			IsNewInput = true;
 			return super.onCreateInputConnection(outAttrs);
-		}*/
+		}
+		//return new RedirectedInputConnection(new EditText(getContext()).onCreateInputConnection(outAttrs), true);
 	}
 	
-	static class RedirectedInputConnection extends InputConnectionWrapper
+	class RedirectedInputConnection extends InputConnectionWrapper
 	{
 		public RedirectedInputConnection(InputConnection target, boolean mutable) {
 			super(target, mutable);
@@ -71,7 +72,8 @@ public class WebViewInputRedirected extends WebView {
 			if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
 				EditorActivity.editorMain.Backspace();
 			}
-			EditorActivity.editorMain.DWebView.dispatchKeyShortcutEvent(event);
+			InputMethodManager imm = (InputMethodManager) EditorActivity.instance.getSystemService(EditorActivity.INPUT_METHOD_SERVICE);
+			imm.dispatchKeyEventFromInputMethod(WebViewInputRedirected.this, event);
 			return super.sendKeyEvent(event);
 		}
 	}

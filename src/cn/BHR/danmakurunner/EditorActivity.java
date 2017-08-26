@@ -5,6 +5,7 @@ import android.app.ActionBar.LayoutParams;
 import android.os.*;
 import android.view.*;
 import android.view.View.OnKeyListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import cn.BHR.danmakurunner.Dialogs.*;
 import cn.BHR.danmakurunner.Projecting.ProjectingMain;
@@ -37,7 +38,7 @@ public class EditorActivity extends Activity {
 		editorMain.DWebView.setOnKeyListener(new OnKeyListener() {
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (keyCode == KeyEvent.KEYCODE_DEL) {
+				if (keyCode == KeyEvent.KEYCODE_DEL && !WebViewInputRedirected.IsNewInput) {
 					return true;
 				}
 				return false;
@@ -117,6 +118,9 @@ public class EditorActivity extends Activity {
 	{
 		final View fView = view;
 		switch (fView.getId()) {
+		case R.id.buttonBackspace:
+			editorMain.Backspace();
+			break;
 		case R.id.buttonInsertTab:
 			editorMain.getEditableText().insert(editorMain.getSelectionStart(), "  ");
 			break;
@@ -124,6 +128,8 @@ public class EditorActivity extends Activity {
 			editorMain.getEditableText().insert(editorMain.getSelectionStart(), ((Button)fView).getText());
 			break;
 		}
+		InputMethodManager imm = (InputMethodManager) EditorActivity.instance.getSystemService(EditorActivity.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(0, InputMethodManager.RESULT_SHOWN);
 	}
 	
 	@Override
