@@ -74,12 +74,7 @@
 				line:parseInt(index/16384),
 				ch:parseInt(index%16384)
 			};
-			cm.doc.replaceRange(content, pos);
-			pos = {
-				line:parseInt(index/16384),
-				ch:parseInt(index%16384)+content.length
-			};
-			cm.doc.setCursor(pos);
+			cm.doc.replaceRange(content, pos, pos, "+input");
 			DRSI.notifyReady();
 		}
 		DRSI.notifyReady();
