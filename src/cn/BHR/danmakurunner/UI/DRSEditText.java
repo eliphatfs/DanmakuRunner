@@ -12,7 +12,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 import cn.BHR.danmakurunner.EditorActivity;
 
 @SuppressLint("SetJavaScriptEnabled")
