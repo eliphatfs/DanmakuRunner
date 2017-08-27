@@ -43,6 +43,7 @@ public class EditorActivity extends Activity {
 				return false;
 			}
 		});
+		editorMain.setText("");
 	}
 	public void OnButtonClick_Save(View view)
 	{
