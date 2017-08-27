@@ -6,9 +6,7 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputConnectionWrapper;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
-import android.widget.EditText;
 import cn.BHR.danmakurunner.EditorActivity;
 
 public class WebViewInputRedirected extends WebView {
@@ -72,8 +70,6 @@ public class WebViewInputRedirected extends WebView {
 			if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_DEL) {
 				EditorActivity.editorMain.Backspace();
 			}
-			InputMethodManager imm = (InputMethodManager) EditorActivity.instance.getSystemService(EditorActivity.INPUT_METHOD_SERVICE);
-			imm.dispatchKeyEventFromInputMethod(WebViewInputRedirected.this, event);
 			return super.sendKeyEvent(event);
 		}
 	}

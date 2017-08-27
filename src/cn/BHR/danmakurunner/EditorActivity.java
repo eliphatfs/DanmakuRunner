@@ -5,7 +5,6 @@ import android.app.ActionBar.LayoutParams;
 import android.os.*;
 import android.view.*;
 import android.view.View.OnKeyListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import cn.BHR.danmakurunner.Dialogs.*;
 import cn.BHR.danmakurunner.Projecting.ProjectingMain;
@@ -44,6 +43,8 @@ public class EditorActivity extends Activity {
 				return false;
 			}
 		});
+		setTitle("Danmaku Runner 6.2.2 Beta 3");
+		editorMain.setText("TESTCHANGE");
 	}
 	public void OnButtonClick_Save(View view)
 	{
@@ -128,8 +129,6 @@ public class EditorActivity extends Activity {
 			editorMain.getEditableText().insert(editorMain.getSelectionStart(), ((Button)fView).getText());
 			break;
 		}
-		InputMethodManager imm = (InputMethodManager) EditorActivity.instance.getSystemService(EditorActivity.INPUT_METHOD_SERVICE);
-		imm.toggleSoftInput(0, InputMethodManager.RESULT_SHOWN);
 	}
 	
 	@Override

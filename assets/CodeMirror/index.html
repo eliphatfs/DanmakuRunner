@@ -47,16 +47,19 @@
 		}
 		function setContent(content)
 		{
+			alert("setContent activated");
 			cm.doc.setValue(content);
 			DRSI.notifyReady();
 		}
 		function appendContent(content)
 		{
+			alert("append activated");
 			cm.doc.setValue(cm.doc.getValue() + content);
 			DRSI.notifyReady();
 		}
 		function backspace()
 		{
+			alert("backspace activated");
 			if (cm.doc.getSelection().length == 0)
 				cm.execCommand("delCharBefore");
 			else cm.doc.replaceSelection("");
@@ -68,6 +71,7 @@
 		}, 50);
 		function insertContent(index, content)
 		{
+			alert("insert activated");
 			var old = cm.doc.getValue();
 			var linech = cm.doc.getCursor();
 			var pos = {
@@ -77,6 +81,7 @@
 			cm.doc.replaceRange(content, pos, pos, "+input");
 			DRSI.notifyReady();
 		}
+		alert("BeforeReady");
 		DRSI.notifyReady();
 	</script>
 </body>

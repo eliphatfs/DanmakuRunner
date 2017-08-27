@@ -4,9 +4,15 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
 import cn.BHR.danmakurunner.EditorActivity;
 
 @SuppressLint("SetJavaScriptEnabled")
@@ -18,6 +24,25 @@ public class DRSEditText {
 			Worker = new Timer();
 		}
 		DWebView = context;
+		DWebView.setWebChromeClient(new WebChromeClient() {
+			@Override
+			public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+				//new Msgbox(message).show(EditorActivity.instance.getFragmentManager(), "JsAlert");
+				result.confirm();
+				return true;
+			}
+		});
+		DWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (Build.VERSION.SDK_INT >= 24) {
+                    view.loadUrl(request.getUrl().toString());
+                } else {
+                    view.loadUrl(request.toString());
+                }
+                return true;
+            }
+		});
 		Init();
 	}
 	
@@ -60,7 +85,7 @@ public class DRSEditText {
 				EditorActivity.updateCodeHandler.post(new Runnable() {
 					@Override
 					public void run() {
-						DWebView.loadUrl("javascript:setCursorPos("+ start +")");
+						_adaptedRunJavascript("setCursorPos("+ start +")");
 					}
 				});
 				WaitReady();
@@ -77,17 +102,19 @@ public class DRSEditText {
 		Worker.schedule(new TimerTask() {
 			@Override
 			public void run() {
+				//new Msgbox("SETCONTENT SCHEDULE ACTIATED").show(EditorActivity.instance.getFragmentManager(), "Msgbox");
 				DRSI.ready = false;
-				EditorActivity.updateCodeHandler.post(new Runnable() {
+				EditorActivity.instance.runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
-						DWebView.loadUrl("javascript:setContent('"+string.replace("\n", "\\n").replace("'", "\\'")+"')");
+						//new Msgbox("SETCONTENT CALL").show(EditorActivity.instance.getFragmentManager(), "Msgbox");
+						_adaptedRunJavascript("setContent('"+string.replace("\n", "\\n").replace("'", "\\'")+"')");
 					}
 				});
 				WaitReady();
 			}
 		}, 0);
-		
+		//new Msgbox("SETCONTENT SCHEDULED").show(EditorActivity.instance.getFragmentManager(), "Msgbox");
 	}
 	public void append(final String string)
 	{
@@ -98,7 +125,7 @@ public class DRSEditText {
 				EditorActivity.updateCodeHandler.post(new Runnable() {
 					@Override
 					public void run() {
-						DWebView.loadUrl("javascript:appendContent('"+string.replace("\n", "\\n").replace("'", "\\'")+"')");
+						_adaptedRunJavascript("appendContent('"+string.replace("\n", "\\n").replace("'", "\\'")+"')");
 					}
 				});
 				WaitReady();
@@ -120,7 +147,41 @@ public class DRSEditText {
 	}
 	public void WaitReady()
 	{
-		while(!DRSI.ready);
+		EditorActivity.updateCodeHandler.post(new Runnable() {
+			@Override
+			public void run() {
+				DWebView.setFocusable(true);
+				DWebView.setFocusableInTouchMode(true);
+				DWebView.requestFocus();
+				DWebView.requestFocusFromTouch();
+				InputMethodManager imm = (InputMethodManager) EditorActivity.instance.getSystemService(EditorActivity.INPUT_METHOD_SERVICE);
+				imm.toggleSoftInput(0, InputMethodManager.RESULT_SHOWN);
+			}
+		});
+		int time = 0;
+		while(!DRSI.ready)
+		{
+			System.out.println("waited for notify: "+ time * 20 + "ms");
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			time++;
+		}
+	}
+	/**
+	 * Please Run On UI Thread
+	 */
+	private void _adaptedRunJavascript(String code)
+	{
+		if (Build.VERSION.SDK_INT >= 24) {
+			DWebView.evaluateJavascript(code, null);
+			//Toast.makeText(EditorActivity.instance, "NEWAPI", Toast.LENGTH_SHORT).show();
+		} else {
+			DWebView.loadUrl("javascript:" + code);
+			//Toast.makeText(EditorActivity.instance, "OLDAPI", Toast.LENGTH_SHORT).show();
+		}
 	}
 	public static class EditOps
 	{
@@ -139,7 +200,7 @@ public class DRSEditText {
 						@Override
 						public void run() {
 							String string = cs.toString();
-							Parent.DWebView.loadUrl("javascript:insertContent("+pos+",'"+string.replace("\n", "\\n").replace("'", "\\'")+"')");
+							Parent._adaptedRunJavascript("insertContent("+pos+",'"+string.replace("\n", "\\n").replace("'", "\\'")+"')");
 						}
 					});
 					Parent.WaitReady();
