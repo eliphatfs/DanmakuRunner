@@ -43,8 +43,6 @@ public class EditorActivity extends Activity {
 				return false;
 			}
 		});
-		setTitle("Danmaku Runner 6.2.2 Beta 3");
-		editorMain.setText("TESTCHANGE");
 	}
 	public void OnButtonClick_Save(View view)
 	{
