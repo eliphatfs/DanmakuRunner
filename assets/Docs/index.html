@@ -67,7 +67,7 @@
 									</tbody>
 									<script>
 										var gen = "";
-										for (var i=0; i< 227; i++)
+										for (var i=0; i< 234; i++)
 											gen += "<tr><td>" + i + "</td><td><img src='../proj" + i + ".png'/></td></tr>";
 										document.getElementById("projIDTable").innerHTML = gen;
 									</script>
@@ -77,7 +77,7 @@
 						<li>
 							<div class="collapsible-header">5、预制AI类型</div>
 							<div class="collapsible-body">
-								<p>注意，类型从0开始计算。当前共3种子弹。</p>
+								<p>注意，类型从0开始计算。</p>
 								<table>
 									<thead>
 										<tr>
@@ -183,7 +183,7 @@
 							<div class="collapsible-body">
 								<p>表示接下来的指令会每隔一段时间执行一次，并且可以指定开始延迟和持续时间</p>
 								<p>用法：</p>
-								<p>setInterval(function(){<br />&nbsp;&nbsp;&nbsp;&nbsp;要执行的代码……<br />}, timeout, interval, timelast);</p>
+								<p>setIntervalEx(function(){<br />&nbsp;&nbsp;&nbsp;&nbsp;要执行的代码……<br />}, timeout, interval, timelast);</p>
 								<p>参数说明：</p>
 								<p>timeout：等待timeout时间后开始执行 类型：数字，单位毫秒</p>
 								<p>interval：开始后执行的间隔 类型：数字，单位毫秒</p>
@@ -253,9 +253,12 @@
 							<div class="collapsible-body">
 								<p>设置。</p>
 								<p>用法：</p>
-								<p>Config(key, value);</p>
-								<p>参数说明：</p>
-								<p>key可能值：SELF_ACTIVE，此时value为0则会不显示自机。</p>
+								<p>Config(key, value, value2);</p>
+								<p>参数说明：value2可选。仅JUDGEPROJ需要此参数。</p>
+								<p>key可能值：</p>
+								<p>SELF_ACTIVE，此时value为0则会不显示自机。</p>
+								<p>FIGHTAREA，设置战斗区大小（在战斗区之外的子弹会被自动回收）。默认值即整个屏幕，540</p>
+								<p>JUDGEPROJ，参数value为子弹类型，value2为设置的判定大小。判定大小默认为0.77。此设置对针弹无效。子弹判定是以子弹中心点为圆心，贴图较短边*判定大小 为直径的圆。</p>
 							</div>
 						</li>
 						<li>

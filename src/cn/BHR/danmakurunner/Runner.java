@@ -19,7 +19,7 @@ public class Runner implements ApplicationListener
 {
 	static SpriteBatch batch;
 	public static int absTicks = 0;
-	public static final int MAXPROJTYPE = 227;
+	public static final int MAXPROJTYPE = 234;
 	public static final int MAXPROJ = 1792;
 	public static ArrayList<Texture> projTextures = new ArrayList<Texture>();
 	public static Rectangle FIGHTAREA = new Rectangle(0, 0, 540, 540);

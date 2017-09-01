@@ -236,6 +236,11 @@ public class DanmakuInterface
 	{
 		RunnerActivity.configs.put(key, value);
 	}
+	@JavascriptInterface
+	public void ProjJudgeSize(int key, double value)
+	{
+		RunnerActivity.ProjJudges.put(key, (float)(value * value));
+	}
 	Vector2 plrJudgeNow = new Vector2();
 	@JavascriptInterface
 	public int ShootPlayer(int id, int type, double posx, double posy, double velocity, double scale, double deltaDeg)

@@ -25,20 +25,22 @@ public class NetActivity extends Activity {
 		webView = new WebView(this);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setAllowFileAccess(true);
-		//webView.getSettings().setAllowFileAccessFromFileURLs(true);
-		//webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+		webView.getSettings().setAllowFileAccessFromFileURLs(true);
+		webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
 		webView.getSettings().setDatabaseEnabled(true);
-        String dir = getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
-        webView.getSettings().setDatabasePath(dir);
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setGeolocationEnabled(true);
         webView.addJavascriptInterface(new NetInterface(), "bridge");
-		webView.setWebViewClient(new WebViewClient(){
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				return true;
-			}
+		webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (Build.VERSION.SDK_INT >= 24) {
+                    view.loadUrl(request.getUrl().toString());
+                } else {
+                    view.loadUrl(request.toString());
+                }
+                return true;
+            }
 		});
 		webView.setWebChromeClient(new WebChromeClient(){
 			@Override
@@ -49,6 +51,8 @@ public class NetActivity extends Activity {
 				return true;
 			}
 		});
+		String dir = getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+        webView.getSettings().setDatabasePath(dir);
 		webView.loadUrl("file:///android_asset/Docs/NetP/index.html");
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(webView);

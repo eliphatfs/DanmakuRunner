@@ -89,9 +89,9 @@ public class Projectile extends Entity
 			setCenter(oldCenter.add(velocity));
 			hitBox();
 			if (parent == -1) {
-				hitRect.set(position.x - _hitCir.radius, position.y - _hitCir.radius, 3*_hitCir.radius, 3*_hitCir.radius);
+				hitRect.set(_center.x - _hitCir.radius, _center.y - _hitCir.radius, 2*_hitCir.radius, 2*_hitCir.radius);
 			}
-			else hitRect.set(Runner.proj[parent].position.x + position.x, Runner.proj[parent].position.y + position.y, 2*_hitCir.radius, 2*_hitCir.radius);
+			else hitRect.set(Runner.proj[parent].position.x + _center.x, Runner.proj[parent].position.y + _center.y, 2*_hitCir.radius, 2*_hitCir.radius);
 			if ((!hitRect.overlaps(Runner.FIGHTAREA)) && (childs == 0))
 			{
 				this.Loot();
@@ -127,7 +127,7 @@ public class Projectile extends Entity
 					grazed = true;
 					Runner.plr.graze++;
 				}
-				if (Runner.plr.invincible <= 0 && distance < _hitCir.radius * _hitCir.radius * 0.6f)
+				if (Runner.plr.invincible <= 0 && distance < _hitCir.radius * _hitCir.radius * RunnerActivity.ProjJudges.get(type, 0.6f))
 				{
 					Runner.plr.Loot();
 					hitPlr = true;

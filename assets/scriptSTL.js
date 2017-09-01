@@ -219,8 +219,14 @@ function GetSelf(prop)
 
 var SELF_ACTIVE = 64;
 var FIGHTAREA = 66;
-function Config(key, value)
+var JUDGEPROJ = 32;
+function Config(key, value, value2)
 {
+	if (key == JUDGEPROJ)
+	{
+		dm.ProjJudgeSize(value, value2);
+		return;
+	}
 	dm.Config(key, value);
 }
 

@@ -19,6 +19,7 @@ public class RunnerActivity extends AndroidApplication {
 	public static final int CONFIG_SENSIBILITY = 65;
 	public static final int CONFIG_FIGHTAREA = 66;
 	public static SparseIntArray configs = new SparseIntArray();
+	public static SparseArray<Float> ProjJudges = new SparseArray<Float>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
