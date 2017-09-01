@@ -95,7 +95,7 @@
   var funcProps = "prototype apply call bind".split(" ");
   var javascriptKeywords = ("break case catch continue debugger default delete do else false finally for function " +
                   "if in instanceof new null return switch throw true try typeof var void while with " +
-									"NewProj NewProjL NewProjAngL DelProj SetProjLifeTime KillPlayer NewProjAng ShootPlayer ShootPlayerL SetProjShader NewText AddText AddTexture SetSelfTexture SetProjAI NewProjRandom ClearProjs SetProj GetProj GetSelf Config NewRelative SetProjEvent PlrAng").split(" ");
+									"NewProj NewProjL NewProjAngL DelProj SetProjLifeTime KillPlayer NewProjAng ShootPlayer ShootPlayerL SetProjShader NewText AddText AddTexture SetSelfTexture SetProjAI NewProjRandom ClearProjs SetProj GetProj GetSelf Config NewRelative SetProjEvent PlrAng setInterval setTimeout").split(" ");
 									//Modified By Obsidianss
   var coffeescriptKeywords = ("and break catch class continue delete do else extends false finally for " +
                   "if in instanceof isnt new no not null of off on or return switch then throw true try typeof until void while with yes").split(" ");

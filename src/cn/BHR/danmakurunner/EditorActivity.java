@@ -82,7 +82,7 @@ public class EditorActivity extends Activity {
 	}
 	private void _autoSave()
 	{
-		if (projecting && (!ProjectingMain.fileName.isEmpty())) {
+		/*if (projecting && (!ProjectingMain.fileName.isEmpty())) {
 			FileOutputStream stream;
 			try {
 				stream = new FileOutputStream(projectPath + ProjectingMain.fileName);
@@ -92,7 +92,7 @@ public class EditorActivity extends Activity {
 				e.printStackTrace();
 			}
 			Toast.makeText(this, ProjectingMain.fileName + " 已经自动保存", Toast.LENGTH_LONG).show();
-		}
+		}*/
 	}
 	public void OnButtonClick_New(View view)
 	{

@@ -25,7 +25,7 @@
 		});
 		cm.on("change", function(){
 			sendContent();
-			//cm.execCommand("autocomplete");
+			cm.execCommand("autocomplete");
 		});
 		cm.on("cursorActivity", function(){
 			sendCursorPos();
