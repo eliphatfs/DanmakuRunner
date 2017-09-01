@@ -149,8 +149,8 @@
       // (reading into JS mode internals to get at the local and global variables)
       for (var v = token.state.localVars; v; v = v.next) maybeAdd(v.name);
       for (var v = token.state.globalVars; v; v = v.next) maybeAdd(v.name);
-      if (!options || options.useGlobalScope !== false)
-        gatherCompletions(global);
+      /*if (!options || options.useGlobalScope !== false)
+        gatherCompletions(global);*/
       forEach(keywords, maybeAdd);
     }
     return found;

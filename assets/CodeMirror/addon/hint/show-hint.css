@@ -14,8 +14,8 @@
   border: 1px solid silver;
 
   background: white;
-  font-size: 90%;
-  font-family: monospace;
+  font-size: 18px;
+  font-family: msyh, 微软雅黑, monospace;
 
   max-height: 20em;
   overflow-y: auto;

@@ -25,6 +25,7 @@
 		});
 		cm.on("change", function(){
 			sendContent();
+			//cm.execCommand("autocomplete");
 		});
 		cm.on("cursorActivity", function(){
 			sendCursorPos();
@@ -72,9 +73,6 @@
 			for (var i = 0; i < count; i++)
 				backspace();
 		}, 50);
-		setInterval(function(){
-			cm.execCommand("autocomplete");
-		}, 1000);
 		function insertContent(index, content)
 		{
 			alert("insert activated");
