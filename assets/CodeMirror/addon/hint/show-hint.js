@@ -1,5 +1,6 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
+// Modified By Obsidianss For Danmaku Runner Script Hints
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
@@ -424,7 +425,7 @@
 
   var defaultOptions = {
     hint: CodeMirror.hint.auto,
-    completeSingle: true,
+    completeSingle: false, // Modified By Obsidianss
     alignWithWord: true,
     closeCharacters: /[\s()\[\]{};:>,]/,
     closeOnUnfocus: true,
