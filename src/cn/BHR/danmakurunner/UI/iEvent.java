@@ -2,8 +2,8 @@ package cn.BHR.danmakurunner.UI;
 
 public class iEvent
 {
-	private iFunction _function;
-	public void register(iFunction function)
+	private iEventFunction _function;
+	public void register(iEventFunction function)
 	{
 		_function = function;
 	}

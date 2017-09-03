@@ -1,6 +1,6 @@
 package cn.BHR.danmakurunner.UI;
 
-public interface iFunction
+public interface iEventFunction
 {
 	public abstract void iDo();
 }
