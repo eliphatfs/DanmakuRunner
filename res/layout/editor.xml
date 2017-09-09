@@ -76,6 +76,13 @@
 				    android:text=";"
 				    android:onClick="OnButtonClick_Inserts" />
 			    
+			    <Button
+				    android:id="@+id/buttonInsertComma"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text=","
+				    android:onClick="OnButtonClick_Inserts" />
+			    
 				<Button
 				    android:id="@+id/buttonInsertPlus"
 				    android:layout_width="wrap_content"
