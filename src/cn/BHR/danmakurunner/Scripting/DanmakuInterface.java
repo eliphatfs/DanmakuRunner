@@ -2,6 +2,7 @@ package cn.BHR.danmakurunner.Scripting;
 import java.io.File;
 
 import com.badlogic.gdx.math.Vector2;
+import com.eclipsesource.v8.V8Array;
 
 import android.os.Environment;
 import android.webkit.JavascriptInterface;
@@ -321,5 +322,13 @@ public class DanmakuInterface
 		else {
 			new ErrorDialog("控制台错误：无法解析的显示模式 - " + Type).show(RunnerActivity.instance.getFragmentManager(), "ConsoleError");
 		}
+	}
+	@JavascriptInterface
+	public V8Array GetLowLevelInitData()
+	{
+		V8Array v8Array = new V8Array(EngineMain.v8);
+		v8Array.push(Runner.screenWidth);
+		v8Array.push(Runner.screenHeight);
+		return v8Array;
 	}
 }

@@ -4,6 +4,10 @@ var available_ids = [];
 var _R2D = 57.295779513082;
 for (var i=0; i<1792; i++)
 	available_ids.push(i);
+
+/**
+	Vector2 Tool
+*/
 function Vector2(x, y)
 {
 	this.x = x || 0;
@@ -63,6 +67,28 @@ Vector2.add = function(v1, v2) { return new Vector2(v1.x+v2.x, v1.y+v2.y); };
 Vector2.sub = function(v1, v2) { return new Vector2(v1.x-v2.x, v1.y-v2.y); };
 Vector2._tmpVel = new Vector2();
 Vector2._tmpVel2 = new Vector2();
+
+/**
+	LowLevel API
+*/
+var lowlv = {
+	mScreenSize: new Vector2(),
+	init: function() {
+		var datas = dm.GetLowLevelInitData();
+		mScreenSize.set(datas[0], datas[1]);
+	},
+	get screenSize() {
+    return mScreenSize;
+  },
+	get realStageSize() {
+		return mScreenSize.x;
+	}
+};
+lowlv.init();
+
+/**
+	Library Functions
+*/
 function NewProj(type, posX, posY, velX, velY, scl)
 {
 	velY = velY||0;
