@@ -32,7 +32,6 @@ public class RunnerActivity extends AndroidApplication {
 		//loadSTL();
     }
 	
-	@SuppressLint("SetJavaScriptEnabled")
 	public static void loadSTL()
 	{
 		if (!loadedSTL)
